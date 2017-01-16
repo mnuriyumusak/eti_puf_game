@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{B2E03FD9-21EF-85B4-C323-13B3FAE55849}") = "eti_puf_game", "Assembly-CSharp.csproj", "{AEEBF08C-AAAB-0DBF-6902-720823C9DD3A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEEBF08C-AAAB-0DBF-6902-720823C9DD3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEEBF08C-AAAB-0DBF-6902-720823C9DD3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEEBF08C-AAAB-0DBF-6902-720823C9DD3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEEBF08C-AAAB-0DBF-6902-720823C9DD3A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

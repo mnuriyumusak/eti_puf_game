@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0F0C2E49-C3FA-470F-F4FD-874EE81D98D6}</ProjectGuid>
+    <ProjectGuid>{AEEBF08C-AAAB-0DBF-6902-720823C9DD3A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -46,16 +46,18 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Character Controller\MyCharacterController.cs" />
+     <Compile Include="Assets\Scripts\Collisions\ballCollisionController.cs" />
+     <Compile Include="Assets\Scripts\Collisions\boundCollisionController.cs" />
+     <Compile Include="Assets\Scripts\Collisions\groundCollision.cs" />
+     <Compile Include="Assets\Scripts\Collisions\kaleCollisionController.cs" />
+     <Compile Include="Assets\Scripts\Input\myInput.cs" />
      <Compile Include="Assets\Scripts\Network\MacthMaking.cs" />
      <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
      <Compile Include="Assets\Scripts\Network\Player.cs" />
-     <Compile Include="Assets\Scripts\collisions\ballCollisionController.cs" />
-     <Compile Include="Assets\Scripts\collisions\boundCollisionController.cs" />
-     <Compile Include="Assets\Scripts\collisions\groundCollision.cs" />
-     <Compile Include="Assets\Scripts\collisions\kaleCollisionController.cs" />
-     <Compile Include="Assets\Scripts\input\myInput.cs" />
-     <Compile Include="Assets\Scripts\physic\pyhsicsOfItems.cs" />
-     <Compile Include="Assets\Scripts\time\IENumaratorHandler.cs" />
+     <Compile Include="Assets\Scripts\Physic\GoalDetector.cs" />
+     <Compile Include="Assets\Scripts\Physic\pyhsicsOfItems.cs" />
+     <Compile Include="Assets\Scripts\Skor\GolSkor.cs" />
+     <Compile Include="Assets\Scripts\Time\IENumaratorHandler.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -15,8 +15,10 @@ public class kaleCollisionController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D coll)
     {
         //eğer puf kalenin üstündeyse zıplayabilmeli yerden yüksekte olmasına rağmen onu ayarlayan br kod. 
-        if (coll.gameObject.tag == "pufCharacter1" || coll.gameObject.tag == "pufCharacter2")
+        if (coll.gameObject.tag == "pufCharacter1" || coll.gameObject.tag == "pufCharacter2")//Burada ki değişecek
         {
+            //Deneme için buarya yazıyoruz
+           
             if (Math.Abs(kale.position.y - poi.charactery) >= 1.90f)
             {
                 GameObject.FindGameObjectWithTag(coll.gameObject.tag).GetComponent<MyCharacterController>().canJump = true;
@@ -25,10 +27,11 @@ public class kaleCollisionController : MonoBehaviour
         }
         if (coll.gameObject.tag == "ball")
         {
-
+            
+           // GameObject.FindGameObjectWithTag("SkorTab").GetComponent<GolSkor>().Gol(gameObject);
         }
     }
-    void OnCollisionExit2D(Collision2D coll)
+    void OnCollisionExit2D(Collision2D coll)//burada ki değişecek
     {
         if (coll.gameObject.tag == "pufCharacter1" || coll.gameObject.tag == "pufCharacter2")
         {
@@ -36,7 +39,7 @@ public class kaleCollisionController : MonoBehaviour
         }
     }
 
-    public void KnowMe()
+    public void KnowMe()// Burada ki değişecek
     {
         if(Network.isServer)
             characterController = GameObject.FindGameObjectWithTag("pufCharacter1").GetComponent<MyCharacterController>();
