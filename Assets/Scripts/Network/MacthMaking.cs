@@ -106,12 +106,14 @@ public class MacthMaking : MonoBehaviour {
             //Network.Instantiate(playerPrefab, new Vector3(-6, 0, 0), Quaternion.EulerRotation(0, 0, 0), 0);
             Network.Instantiate(Ball, Vector3.up, Quaternion.identity, 0);
             Assign(a);
+            Debug.Log("character b id" + a.GetInstanceID());
 
         }
         else
         {
             GameObject b = (GameObject)Network.Instantiate(PlayerPrefab, new Vector3(6, 0, 0), Quaternion.EulerRotation(0, 180, 0), 0);
             Assign(b);
+            Debug.Log("character b id" + b.GetInstanceID());
         }
 
     }

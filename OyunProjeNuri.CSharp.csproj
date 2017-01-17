@@ -73,11 +73,13 @@
     <Compile Include="Assets\Scripts\Network\MacthMaking.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Network\Player.cs" />
+    <Compile Include="Assets\Scripts\Skor\GolSkor.cs" />
     <Compile Include="Assets\Scripts\collisions\ballCollisionController.cs" />
     <Compile Include="Assets\Scripts\collisions\boundCollisionController.cs" />
     <Compile Include="Assets\Scripts\collisions\groundCollision.cs" />
     <Compile Include="Assets\Scripts\collisions\kaleCollisionController.cs" />
     <Compile Include="Assets\Scripts\input\myInput.cs" />
+    <Compile Include="Assets\Scripts\physic\GoalDetector.cs" />
     <Compile Include="Assets\Scripts\physic\pyhsicsOfItems.cs" />
     <Compile Include="Assets\Scripts\time\IENumaratorHandler.cs" />
   </ItemGroup>

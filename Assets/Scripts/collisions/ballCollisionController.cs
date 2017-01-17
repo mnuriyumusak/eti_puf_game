@@ -14,17 +14,14 @@ public class ballCollisionController : MonoBehaviour {
     void Start()
     {
         poi = GameObject.FindGameObjectWithTag("poi").GetComponent<pyhsicsOfItems>();
-        characterController = GameObject.FindGameObjectWithTag("pufCharacter1").GetComponent<MyCharacterController>();
- 
-
-
+        characterController = GameObject.FindGameObjectWithTag("pufCharacter").GetComponent<MyCharacterController>();
     }
 
     //detect if character and ball collide or not
     void OnCollisionEnter2D(Collision2D coll)
     {
         //eğer player üstte ve top aşağıdaysa fırlatıp atıyor topu yuarıya. 
-        if (coll.gameObject.tag == "pufCharacter1" || coll.gameObject.tag == "pufCharacter2")
+        if (coll.gameObject.tag == "pufCharacter" || coll.gameObject.tag == "pufCharacter2")
         {
             if(!GameObject.FindGameObjectWithTag(coll.gameObject.tag).GetComponent<MyCharacterController>().stopMovingLeft)
                 poi.rbOfBall.velocity = new Vector2(-GameObject.FindGameObjectWithTag(coll.gameObject.tag).GetComponent<MyCharacterController>().ballReactionSpeed, 0);

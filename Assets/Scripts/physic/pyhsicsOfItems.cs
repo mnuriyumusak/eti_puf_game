@@ -31,7 +31,6 @@ public class pyhsicsOfItems : MonoBehaviour {
         rightLine = rightBound.position.x;
         leftLine = leftBound.position.x;
         topLine = upperBound.position.y;
-
       
 }
     // Update is called once per frame

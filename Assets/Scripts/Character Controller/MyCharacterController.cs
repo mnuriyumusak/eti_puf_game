@@ -76,6 +76,7 @@ public class MyCharacterController : MonoBehaviour
     void Start()
     {
         poi = GameObject.FindGameObjectWithTag("poi").GetComponent<pyhsicsOfItems>();
+        Debug.Log("idler" + poi.character.GetInstanceID());
         // gameObject.GetComponent<NetworkView>().stateSynchronization = NetworkStateSynchronization.Unreliable;
     }
 

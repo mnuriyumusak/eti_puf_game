@@ -100,19 +100,20 @@ public class NetworkManager : MonoBehaviour
         if (Network.isServer)
         {
             GameObject a = (GameObject)Network.Instantiate(playerPrefab, new Vector3(-6, -3.29f, 0), Quaternion.identity, 0);
-            a.name = "aa";
-            a.tag = "pufCharacter2";
+            a.tag = "pufCharacter";
             //Network.Instantiate(playerPrefab, new Vector3(-6, 0, 0), Quaternion.EulerRotation(0, 0, 0), 0);
             Network.Instantiate(Ball, Vector3.up, Quaternion.identity, 0);
             Assign(a);
+
 
         }
         else
         {
             GameObject b = (GameObject)Network.Instantiate(playerPrefab, new Vector3(6, -3.29f, 0), Quaternion.EulerRotation(0, 180, 0), 0);
-            b.name = "bb";
-            b.tag = "pufCharacter1";
+            b.tag = "pufCharacter";
             Assign(b);
+
+            
         }
 
        
