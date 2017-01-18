@@ -45,6 +45,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\GradientGUIBars\Script\ControlGUIScript.cs" />
+     <Compile Include="Assets\GradientGUIBars\Script\GUIBarScript.cs" />
+     <Compile Include="Assets\GradientGUIBars\Script\MoreButtonScript.cs" />
+     <Compile Include="Assets\GradientGUIBars\Script\MoveCameraScript.cs" />
      <Compile Include="Assets\Scripts\Character Controller\MyCharacterController.cs" />
      <Compile Include="Assets\Scripts\Collisions\ballCollisionController.cs" />
      <Compile Include="Assets\Scripts\Collisions\boundCollisionController.cs" />
@@ -56,8 +60,10 @@
      <Compile Include="Assets\Scripts\Network\Player.cs" />
      <Compile Include="Assets\Scripts\Physic\GoalDetector.cs" />
      <Compile Include="Assets\Scripts\Physic\pyhsicsOfItems.cs" />
+     <Compile Include="Assets\Scripts\Powers\Mana System\ManaBar.cs" />
      <Compile Include="Assets\Scripts\Skor\GolSkor.cs" />
      <Compile Include="Assets\Scripts\Time\IENumaratorHandler.cs" />
+     <None Include="Assets\GradientGUIBars\ReadMe\AboutFonts.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

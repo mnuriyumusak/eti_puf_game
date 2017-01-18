@@ -43,8 +43,8 @@ public class kaleCollisionController : MonoBehaviour
     {
         if(Network.isServer)
             characterController = GameObject.FindGameObjectWithTag("pufCharacter1").GetComponent<MyCharacterController>();
-        else
-            characterController = GameObject.FindGameObjectWithTag("pufCharacter2").GetComponent<MyCharacterController>();
+       // else
+      //      characterController = GameObject.FindGameObjectWithTag("pufCharacter2").GetComponent<MyCharacterController>();
 
     }
 }

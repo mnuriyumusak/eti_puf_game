@@ -8,7 +8,7 @@ bu class üzerinden ulaşabiliyor.
 */
 public class pyhsicsOfItems : MonoBehaviour {
     public GameObject character;
-    public GameObject ball;
+    //public GameObject ball;//Null referene bu yani gereksiz
     public Rigidbody2D rbOfCharacter;
     public Rigidbody2D rbOfBall;
     public Transform upperBound,rightBound,leftBound,bottomBound; //boundaries 
@@ -25,7 +25,8 @@ public class pyhsicsOfItems : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rbOfCharacter = character.GetComponent<Rigidbody2D>(); //player'in rigidbody'si tanımlanıyor 
-        rbOfBall = ball.GetComponent<Rigidbody2D>();
+      //  rbOfBall = ball.GetComponent<Rigidbody2D>();
+        rbOfBall = GameObject.FindGameObjectWithTag("ball").GetComponent<Rigidbody2D>();
         //Aşağıda oyun alanının sınırlarının x ve y koorinatlarını float olarak belirliyoruz 
         bottomLine = bottomBound.position.y;
         rightLine = rightBound.position.x;
