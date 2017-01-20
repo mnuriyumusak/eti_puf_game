@@ -16,9 +16,9 @@ public class MyCharacterController : MonoBehaviour
     public bool caprazSolaGidiyor = false; //çapraz yani hem jump hem de sağ ve ya sol tuşa basılıp basılmadığı gösterir. 
     public bool caprazdaYonDegisti = false; //çapraz giderken tam ters yöndeki tuşa basılıp basılmadığının anlaşılmasına yarar. 
     private float JumpForce;
-    public float JumpForceKatsayisi; //zıplama gücü 
-    public float JumpSmoothKatsayisi; //yukarda yavaşlama katsayısı 
-    private float jumpStartHeight;
+    public float JumpForceKatsayisi = 14; //zıplama gücü 
+    public float JumpSmoothKatsayisi = 0.95f; //yukarda yavaşlama katsayısı 
+    private float jumpStartHeight = 1.5f;
     public float maxJumpHeight;
     private Vector3 movement; //movement vektörü sağa sola giderken kullanılan bir değişken 
     private Vector3 jumpMovement; //movement vektörünün zıplarken gideceği yolu belirleyen vektör 
@@ -33,50 +33,55 @@ public class MyCharacterController : MonoBehaviour
 
     void Update()
     {
-        //yere ininci gravitiy açıyor,  havadayken kapatıyor 
-        if (canJump)
-            poi.openGravityForPlayer();
-
-        if (jumpActiavted)
+        if(poi != null)
         {
-            //yukarı doğru azalan bir force bu da smooth bir zıplama sağlar yani duvara çarpıyomuş gibi değil
-            JumpForce = JumpSmoothKatsayisi + (JumpForceKatsayisi - ((JumpForceKatsayisi / (maxJumpHeight - jumpStartHeight)) * (poi.rbOfCharacter.transform.position.y - jumpStartHeight)));
+            //yere ininci gravitiy açıyor,  havadayken kapatıyor 
+            if (canJump)
+                poi.openGravityForPlayer();
 
-            if (caprazSagaGidiyor)
+            if (jumpActiavted)
             {
-                jumpMovement = new Vector3(JumpForce / 2 * Time.deltaTime, JumpForce * Time.deltaTime, 0f);
-            }
-            else if (caprazSolaGidiyor)
-            {
-                jumpMovement = new Vector3(-JumpForce / 2 * Time.deltaTime, JumpForce * Time.deltaTime, 0f);
-            }
-            else
-            {
-                jumpMovement = new Vector3(0f, JumpForce * Time.deltaTime, 0f);
-            }
-            jumpMovement = jumpMovement + poi.rbOfCharacter.transform.position;
-            poi.rbOfCharacter.transform.position = jumpMovement;
-        }
-        if (poi.rbOfCharacter.transform.position.y > -3.29 && startGravity)
-        {
-            //yukarı doğru azalan bir force bu da smooth bir zıplama sağlar yani duvara çarpıyomuş gibi değil
-            JumpForce = JumpSmoothKatsayisi + (JumpForceKatsayisi - ((JumpForceKatsayisi / (maxJumpHeight - jumpStartHeight)) * (poi.rbOfCharacter.transform.position.y - jumpStartHeight)));
+                //yukarı doğru azalan bir force bu da smooth bir zıplama sağlar yani duvara çarpıyomuş gibi değil
+                JumpForce = JumpSmoothKatsayisi + (JumpForceKatsayisi - ((JumpForceKatsayisi / (maxJumpHeight - jumpStartHeight)) * (poi.rbOfCharacter.transform.position.y - jumpStartHeight)));
 
-            jumpMovement = new Vector3(0f, -JumpForce * Time.deltaTime, 0f);
-            jumpMovement = jumpMovement + poi.rbOfCharacter.transform.position;
-            poi.rbOfCharacter.transform.position = jumpMovement;
+                if (caprazSagaGidiyor)
+                {
+                    jumpMovement = new Vector3(JumpForce / 2 * Time.deltaTime, JumpForce * Time.deltaTime, 0f);
+                }
+                else if (caprazSolaGidiyor)
+                {
+                    jumpMovement = new Vector3(-JumpForce / 2 * Time.deltaTime, JumpForce * Time.deltaTime, 0f);
+                }
+                else
+                {
+                    jumpMovement = new Vector3(0f, JumpForce * Time.deltaTime, 0f);
+                }
+                jumpMovement = jumpMovement + poi.rbOfCharacter.transform.position;
+                poi.rbOfCharacter.transform.position = jumpMovement;
+            }
+            if (poi.rbOfCharacter.transform.position.y > -3.29 && startGravity)
+            {
+                //yukarı doğru azalan bir force bu da smooth bir zıplama sağlar yani duvara çarpıyomuş gibi değil
+                JumpForce = JumpSmoothKatsayisi + (JumpForceKatsayisi - ((JumpForceKatsayisi / (maxJumpHeight - jumpStartHeight)) * (poi.rbOfCharacter.transform.position.y - jumpStartHeight)));
+
+                jumpMovement = new Vector3(0f, -JumpForce * Time.deltaTime, 0f);
+                jumpMovement = jumpMovement + poi.rbOfCharacter.transform.position;
+                poi.rbOfCharacter.transform.position = jumpMovement;
+            }
+
+            if (poi.rbOfCharacter.transform.position.y >= maxJumpHeight - 0.2f)
+            {
+                startGravity = true;
+                jumpActiavted = false;
+            }
         }
-        if (poi.rbOfCharacter.transform.position.y >= maxJumpHeight - 0.2f)
-        {
-            startGravity = true;
-            jumpActiavted = false;
-        }
+        
     }
 
     void Start()
     {
-        poi = GameObject.FindGameObjectWithTag("poi").GetComponent<pyhsicsOfItems>();
-        Debug.Log("idler" + poi.character.GetInstanceID());
+        //poi = new pyhsicsOfItems(this.gameObject, upperBound, rightBound, leftBound, bottomBound);
+        //poi = GameObject.FindGameObjectWithTag("poi").GetComponent<pyhsicsOfItems>();
         // gameObject.GetComponent<NetworkView>().stateSynchronization = NetworkStateSynchronization.Unreliable;
     }
 

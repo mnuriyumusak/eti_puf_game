@@ -16,11 +16,10 @@ public class MacthMaking : MonoBehaviour {
     private bool _checkGame = true;
     private bool _startTimer = false;
 
-    private pyhsicsOfItems poi;
-    private myInput myi;
-    private groundCollision gro;
+    private myInput myi,myi2;
+    private groundCollision gro,gro2;
     private kaleCollisionController kaleo;
-
+    private pyhsicsOfItems poi;
     void OnGUI()
     {
         if(!_gameStarted)
@@ -76,44 +75,41 @@ public class MacthMaking : MonoBehaviour {
       
     }
 
-    void Start() { NetworkManager.DontDestroyOnLoad(gameObject);
-    SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+    void Start() {
+        MacthMaking.DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
 
     void Assign(GameObject Player)
     {
-        poi = GameObject.FindGameObjectWithTag("poi").GetComponent<pyhsicsOfItems>();
-        myi = GameObject.FindGameObjectWithTag("myin").GetComponent<myInput>();
-        gro = GameObject.FindGameObjectWithTag("gro").GetComponent<groundCollision>();
-        kaleo = GameObject.FindGameObjectWithTag("kaleo").GetComponent<kaleCollisionController>();
+            myi = GameObject.FindGameObjectWithTag("myin").GetComponent<myInput>();
+            myi.KnowMe(Player);
+            gro = GameObject.FindGameObjectWithTag("gro").GetComponent<groundCollision>();
+            gro.KnowMe(Player,myi);
+            poi = GameObject.FindGameObjectWithTag("poi").GetComponent<pyhsicsOfItems>();
+            poi.knowMe(Player, gro.gameObject);
+            Player.GetComponent<MyCharacterController>().poi = poi;
 
-        poi.KnowMe();
-        myi.KnowMe();
-        gro.KnowMe();
-        kaleo.KnowMe();
     }
 
     void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
         SpawnPlayer();
- 
     }
+
     private void SpawnPlayer()
     {
         if (Network.isServer)
         {
-            GameObject a = (GameObject)Network.Instantiate(PlayerPrefab, new Vector3(-6, 0, 0), Quaternion.EulerRotation(0, 0, 0), 0);
+            GameObject a = (GameObject)Network.Instantiate(PlayerPrefab, new Vector3(-6, -3.290302f, 0), Quaternion.EulerRotation(0, 0, 0), 0);
             //Network.Instantiate(playerPrefab, new Vector3(-6, 0, 0), Quaternion.EulerRotation(0, 0, 0), 0);
             Network.Instantiate(Ball, Vector3.up, Quaternion.identity, 0);
             Assign(a);
-            Debug.Log("character b id" + a.GetInstanceID());
-
         }
         else
         {
-            GameObject b = (GameObject)Network.Instantiate(PlayerPrefab, new Vector3(6, 0, 0), Quaternion.EulerRotation(0, 180, 0), 0);
-            Assign(b);
-            Debug.Log("character b id" + b.GetInstanceID());
+            GameObject b = (GameObject)Network.Instantiate(PlayerPrefab, new Vector3(6, -3.290302f, 0), Quaternion.EulerRotation(0, 180, 0), 0);
+            StartCoroutine(Wait1SecondForDetectBall(b));
         }
 
     }
@@ -121,6 +117,7 @@ public class MacthMaking : MonoBehaviour {
     {
         Disconnect();
     }
+
     void Update()
     {
         if (_checkGame) {
@@ -156,5 +153,13 @@ public class MacthMaking : MonoBehaviour {
     void ModifyPlayer()
     {
 
+    }
+
+
+    // every 2 seconds perform the print()
+    private IEnumerator Wait1SecondForDetectBall(GameObject b)
+    {
+        yield return new WaitForSeconds(1f);
+        Assign(b);
     }
 }

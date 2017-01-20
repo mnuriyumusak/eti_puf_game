@@ -13,38 +13,38 @@ public class pyhsicsOfItems : MonoBehaviour {
     public Rigidbody2D rbOfBall;
     public Transform upperBound,rightBound,leftBound,bottomBound; //boundaries 
 
-    public float bottomLine;
-    public float rightLine;
-    public float leftLine;
-    public float topLine;
+    public float bottomLine = -3.524915f;
+    public float rightLine = 6.68f;
+    public float leftLine = -6.7f;
+    public float topLine = 4.99f;
     public float ballx;
     public float bally;
     public float characterx;
     public float charactery;
-    
+
+
     // Use this for initialization
     void Start () {
-        rbOfCharacter = character.GetComponent<Rigidbody2D>(); //player'in rigidbody'si tanımlanıyor 
-      //  rbOfBall = ball.GetComponent<Rigidbody2D>();
-        rbOfBall = GameObject.FindGameObjectWithTag("ball").GetComponent<Rigidbody2D>();
-        //Aşağıda oyun alanının sınırlarının x ve y koorinatlarını float olarak belirliyoruz 
-        bottomLine = bottomBound.position.y;
-        rightLine = rightBound.position.x;
-        leftLine = leftBound.position.x;
-        topLine = upperBound.position.y;
-      
+        //rbOfCharacter = character.GetComponent<Rigidbody2D>(); //player'in rigidbody'si tanımlanıyor 
+                                                               //  rbOfBall = ball.GetComponent<Rigidbody2D>();
+
+        //tag yerine id kullanacaz ikisi için de farklı çünkü
 }
     // Update is called once per frame
     Vector3 lastPosition;
     float minimumMovement = .05f;
+
     void Update()
     {
-        //bu methodda oyun içinde her an topun ve player'in yerini bilmemiz için x ve y koordinatlarını sürekli güncelleniyor
-        ballx = rbOfBall.transform.position.x;
-        bally = rbOfBall.transform.position.y;
-        characterx = rbOfCharacter.transform.position.x;
-        charactery = rbOfCharacter.transform.position.y;
-         
+        if(rbOfBall != null)
+        {
+            //bu methodda oyun içinde her an topun ve player'in yerini bilmemiz için x ve y koordinatlarını sürekli güncelleniyor
+            ballx = rbOfBall.transform.position.x;
+            bally = rbOfBall.transform.position.y;
+            characterx = rbOfCharacter.transform.position.x;
+            charactery = rbOfCharacter.transform.position.y;
+        }
+
       //  SetPosition(character.transform.position);
 
     }
@@ -92,11 +92,31 @@ public class pyhsicsOfItems : MonoBehaviour {
     {
         rbOfCharacter.gravityScale = 0;
     }
-    public void KnowMe()
-    {
 
-         character = GameObject.FindGameObjectWithTag("pufCharacter1");
-         rbOfCharacter = GameObject.FindGameObjectWithTag("pufCharacter1").GetComponent<Rigidbody2D>();
+    public void knowMe(GameObject player, GameObject ground)
+    {
+        character = player;
+        rbOfCharacter = character.GetComponent<Rigidbody2D>();
+        bottomBound = ground.transform;
+
+        if (Network.isServer)
+            rbOfBall = GameObject.FindGameObjectWithTag("ball").GetComponent<Rigidbody2D>();
+        else
+            StartCoroutine(Wait1SecondForDetectBall());
+
+        //Aşağıda oyun alanının sınırlarının x ve y koorinatlarını float olarak belirliyoruz 
+        bottomLine = bottomBound.position.y;
+        rightLine = rightBound.position.x;
+        leftLine = leftBound.position.x;
+        topLine = upperBound.position.y;
+    }
+
+    // every 2 seconds perform the print()
+    private IEnumerator Wait1SecondForDetectBall()
+    {
+        yield return new WaitForSeconds(0.5f);
+        rbOfBall = GameObject.FindGameObjectWithTag("ball").GetComponent<Rigidbody2D>();
+
     }
 
 }

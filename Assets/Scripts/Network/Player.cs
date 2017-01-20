@@ -59,6 +59,10 @@ public class Player : MonoBehaviour
  
     private float syncgravityScale = 1f;
 
+    private Vector3 syncPosition = Vector3.zero;
+    private Vector3 syncVelocity = Vector3.zero;
+    private float gravityScale = 1f;
+
     void Awake()
     {
         lastSynchronizationTime = Time.time;
@@ -81,26 +85,16 @@ public class Player : MonoBehaviour
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
-        Vector3 syncPosition = Vector3.zero;
-        Vector3 syncVelocity = Vector3.zero;
-        float gravityScale = 1f;
-        if (stream.isWriting)
+        syncPosition = GetComponent<Rigidbody2D>().position;
+        syncVelocity = GetComponent<Rigidbody2D>().velocity;
+        gravityScale = GetComponent<Rigidbody2D>().gravityScale;
+
+        stream.Serialize(ref syncPosition);
+        stream.Serialize(ref syncVelocity);
+        stream.Serialize(ref gravityScale);
+
+        if (stream.isReading)
         {
-            syncPosition = GetComponent<Rigidbody2D>().position;
-            stream.Serialize(ref syncPosition);
-
-            syncVelocity = GetComponent<Rigidbody2D>().velocity;
-            stream.Serialize(ref syncVelocity);
-
-            gravityScale = GetComponent<Rigidbody2D>().gravityScale;
-            stream.Serialize(ref gravityScale);
-        }
-
-        else
-        {
-            stream.Serialize(ref syncPosition);
-            stream.Serialize(ref syncVelocity);
-            stream.Serialize(ref gravityScale);
 
             syncTime = 0f;
             syncDelay = Time.time - lastSynchronizationTime;
@@ -110,6 +104,7 @@ public class Player : MonoBehaviour
             syncStartPosition = GetComponent<Rigidbody2D>().position;
             syncgravityScale = gravityScale;
         }
+
     }
     
 }

@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.4.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -69,10 +71,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\GradientGUIBars\Script\ControlGUIScript.cs" />
+    <Compile Include="Assets\GradientGUIBars\Script\GUIBarScript.cs" />
+    <Compile Include="Assets\GradientGUIBars\Script\MoreButtonScript.cs" />
+    <Compile Include="Assets\GradientGUIBars\Script\MoveCameraScript.cs" />
     <Compile Include="Assets\Scripts\Character Controller\MyCharacterController.cs" />
     <Compile Include="Assets\Scripts\Network\MacthMaking.cs" />
-    <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Network\Player.cs" />
+    <Compile Include="Assets\Scripts\Powers\Mana System\ManaBar.cs" />
     <Compile Include="Assets\Scripts\Skor\GolSkor.cs" />
     <Compile Include="Assets\Scripts\collisions\ballCollisionController.cs" />
     <Compile Include="Assets\Scripts\collisions\boundCollisionController.cs" />
@@ -82,6 +88,9 @@
     <Compile Include="Assets\Scripts\physic\GoalDetector.cs" />
     <Compile Include="Assets\Scripts\physic\pyhsicsOfItems.cs" />
     <Compile Include="Assets\Scripts\time\IENumaratorHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\GradientGUIBars\ReadMe\AboutFonts.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

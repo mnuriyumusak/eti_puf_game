@@ -107,8 +107,8 @@ public class myInput : MonoBehaviour {
     }
 
 
-    public void KnowMe()
+    public void KnowMe(GameObject player)
     {
-        character1Controller = GameObject.FindGameObjectWithTag("pufCharacter1").GetComponent<MyCharacterController>();
+        character1Controller = player.GetComponent<MyCharacterController>();
     }
 }
