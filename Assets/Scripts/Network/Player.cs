@@ -3,52 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-    #region Real
-    /*  public float speed = 10f;
 
-    private float lastSynchronizationTime = 0f;
-    private float syncDelay = 0f;
-    private float syncTime = 0f;
-    private Vector3 syncStartPosition = Vector3.zero;
-    private Vector3 syncEndPosition = Vector3.zero;
-
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
-    {
-        Vector3 syncPosition = Vector3.zero;
-        Vector3 syncVelocity = Vector3.zero;
-        if (stream.isWriting)
-        {
-            syncPosition = GetComponent<Rigidbody2D>().position;
-            stream.Serialize(ref syncPosition);
-
-            syncPosition = GetComponent<Rigidbody2D>().velocity;
-            stream.Serialize(ref syncVelocity);
-        }
-        else
-        {
-            stream.Serialize(ref syncPosition);
-            stream.Serialize(ref syncVelocity);
-
-            syncTime = 0f;
-            syncDelay = Time.time - lastSynchronizationTime;
-            lastSynchronizationTime = Time.time;
-
-            syncEndPosition = syncPosition + syncVelocity * syncDelay;
-            syncStartPosition = GetComponent<Rigidbody2D>().position;
-        }
-    }
-
-    void Awake()
-    {
-        lastSynchronizationTime = Time.time;
-    }
-
-    void Update()
-    {
-        syncTime += Time.deltaTime;
-    }
-    */
-    #endregion
     public float speed = 10f;
 
     private float lastSynchronizationTime = 0f;
@@ -62,6 +17,9 @@ public class Player : MonoBehaviour
     private Vector3 syncPosition = Vector3.zero;
     private Vector3 syncVelocity = Vector3.zero;
     private float gravityScale = 1f;
+    private RaycastHit _hit;
+    private ManaBar _mana;
+    private bool _isServer;
 
     void Awake()
     {
@@ -106,5 +64,35 @@ public class Player : MonoBehaviour
         }
 
     }
-    
+
+    void Update()
+    {
+
+        if (_isServer)
+        {
+            Debug.DrawRay(transform.position, new Vector3(5, 0, 0));
+            if (Physics.Raycast(transform.position, new Vector3(5, 0, 0), out _hit, 5))
+                if (_hit.transform.tag == "RigthRayBox")
+                    _mana.IncreaseP1();
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, new Vector3(-5, 0, 0));
+            if (Physics.Raycast(transform.position, new Vector3(-5, 0, 0), out _hit, 5))
+                if (_hit.transform.tag == "LeftRayBox")
+                    _mana.IncreaseP2();
+        }
+        
+       
+    }
+    void Start()
+    {
+         _mana = GameObject.FindGameObjectWithTag("SkorTab").GetComponent<ManaBar>();
+         if (transform.position.x != -6)
+             _isServer = false;
+         else
+             _isServer = true;
+    }
+
+
 }
