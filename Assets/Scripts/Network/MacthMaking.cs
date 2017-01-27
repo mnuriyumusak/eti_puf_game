@@ -15,31 +15,26 @@ public class MacthMaking : MonoBehaviour {
     private bool _gameStarted = false;
     private bool _checkGame = true;
     private bool _startTimer = false;
-    private NetworkView _netView;
-    private NetworkPlayer _netPlay;
+
     private myInput myi,myi2;
     private groundCollision gro,gro2;
     private kaleCollisionController kaleo;
     private pyhsicsOfItems poi;
-
     void OnGUI()
     {
-       /* if(!_gameStarted)
+        if(!_gameStarted)
         if (GUI.Button(new Rect(100, 100, 200, 200), "Macth"))
-            CheckGame();*/
+            CheckGame();
 
     }
 
-   public void CheckGame()
+    void CheckGame()
     {
-        Debug.Log("Checking Available Games...");
-        if (_host.Length == 0){         
-            Debug.Log("No Availale Games, Creating One...");
+       
+        if (_host.Length == 0)
             StartGame();
-        }
         else
         {
-            Debug.Log("A Game Has Found, Connecting...");
             JoinGame(_host[0]);
         }
 
@@ -53,14 +48,13 @@ public class MacthMaking : MonoBehaviour {
        Network.InitializeServer(5, 25000, true); //Nat olup olmadığını kontrol edip ona göre ayarla ture değerini
         MasterServer.RegisterHost(_typeName, _gameName);
         _startTimer = true;
-        Debug.Log("Game Started. Waiting For a Connection");
+        print("Game Started. Waiting For a Connection");
         
     }
     void JoinGame(HostData Host)
     {
-        Debug.Log("Joining "+Host.gameName);
+        print("Joining "+Host.gameName+"'s Game On: "+Host.ip);
         Network.Connect(Host);
-
     }
     void OnPlayerConnected(NetworkPlayer player)
     {
@@ -68,22 +62,20 @@ public class MacthMaking : MonoBehaviour {
         _checkGame = false;
         _gameStarted = true;
         MasterServer.UnregisterHost();
-        Debug.Log(player.ipAddress+" Connected to The Server");
-        SceneManager.LoadScene("PlayGround");//Wil change to a RPC function later
+        print(player.ipAddress+" Connected to The Server");
+        SceneManager.LoadScene("PlayGround");
       
     }
     void OnConnectedToServer()
     {
-        Debug.Log("Connected to"+_host[0].gameName);
+        print("Player Connected to"+_host[0].ip);
         _checkGame = false;
         _gameStarted = true;
-        SceneManager.LoadScene("PlayGround");//Wil change to a RPC function later
+        SceneManager.LoadScene("PlayGround");
       
     }
 
     void Start() {
-        _netView = GetComponent<NetworkView>();
-   //     _netPlay = GetComponent<NetworkPlayer>();
         MacthMaking.DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
@@ -100,32 +92,30 @@ public class MacthMaking : MonoBehaviour {
 
     }
 
-    void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)//Wil change to a RPC function later
+    void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-      
-            SpawnPlayer();
+        SpawnPlayer();
     }
 
     private void SpawnPlayer()
     {
         if (Network.isServer)
         {
-            GameObject a = (GameObject)Network.Instantiate(PlayerPrefab, new Vector3(-6, -3.290302f, 0), Quaternion.Euler(0, 0, 0), 0);
+            GameObject a = (GameObject)Network.Instantiate(PlayerPrefab, new Vector3(-6, -3.290302f, 0), Quaternion.EulerRotation(0, 0, 0), 0);
+            //Network.Instantiate(playerPrefab, new Vector3(-6, 0, 0), Quaternion.EulerRotation(0, 0, 0), 0);
             Network.Instantiate(Ball, Vector3.up, Quaternion.identity, 0);
             Assign(a);
         }
         else
         {
-            GameObject b = (GameObject)Network.Instantiate(PlayerPrefab, new Vector3(6, -3.290302f, 0), Quaternion.Euler(0, 180, 0), 0);
+            GameObject b = (GameObject)Network.Instantiate(PlayerPrefab, new Vector3(6, -3.290302f, 0), Quaternion.EulerRotation(0, 180, 0), 0);
             StartCoroutine(Wait1SecondForDetectBall(b));
         }
 
     }
-
-    void OnDestroy()//for an unxpected close before the closing the connection
+    void OnDestroy()//Bunu sil Sadece debug
     {
-        if (Network.isServer)
-            Disconnect();
+        Disconnect();
     }
 
     void Update()
@@ -146,13 +136,13 @@ public class MacthMaking : MonoBehaviour {
             Disconnect();
     }
 
-   public void Disconnect()
+    void Disconnect()
     {
         
-        Network.Disconnect(1000);      
+        Network.Disconnect();
         MasterServer.UnregisterHost();
+        print("No Game Found");
         _gameStarted = false;
-        SceneManager.LoadScene(0);
       
     }
 
@@ -167,23 +157,9 @@ public class MacthMaking : MonoBehaviour {
 
 
     // every 2 seconds perform the print()
-    //But why tho?
     private IEnumerator Wait1SecondForDetectBall(GameObject b)
     {
         yield return new WaitForSeconds(1f);
         Assign(b);
     }
-    void OnPlayerDisconnected(NetworkPlayer player)
-    {
-        Debug.Log("Clean up after player " + player);
-        Network.RemoveRPCs(player);
-        Network.DestroyPlayerObjects(player);
-        Disconnect();
-      //  Destroy(GameObject.FindGameObjectWithTag("Menu"));
-       // Destroy(gameObject);     
-        SceneManager.UnloadScene("PlayGround");
-        SceneManager.LoadScene(0);
-
-    }
-   
 }
