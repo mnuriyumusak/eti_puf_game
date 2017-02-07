@@ -54,9 +54,10 @@
      <Compile Include="Assets\Scripts\Collisions\boundCollisionController.cs" />
      <Compile Include="Assets\Scripts\Collisions\groundCollision.cs" />
      <Compile Include="Assets\Scripts\Collisions\kaleCollisionController.cs" />
+     <Compile Include="Assets\Scripts\DemoRay.cs" />
+     <Compile Include="Assets\Scripts\GUI\StartMenu.cs" />
      <Compile Include="Assets\Scripts\Input\myInput.cs" />
      <Compile Include="Assets\Scripts\Network\MacthMaking.cs" />
-     <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
      <Compile Include="Assets\Scripts\Network\Player.cs" />
      <Compile Include="Assets\Scripts\Physic\GoalDetector.cs" />
      <Compile Include="Assets\Scripts\Physic\pyhsicsOfItems.cs" />
