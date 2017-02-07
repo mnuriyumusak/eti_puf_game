@@ -7,24 +7,28 @@ burdaki methodlar atanmaktadır.
 public class myInput : MonoBehaviour {
     public MyCharacterController character1Controller;
     public UnityEngine.UI.Button butonRight, butonLeft; //butonların olduğu yer. 
+    public bool jumpIsAlreadyClicked = false;
 
     //Bu method jump butonuna basılı olduğunda çalışacak butondur. Eğer karakterin canjump değişkeni true ise jump yapabilir
     //değilse yapamaz. Ama havada olduğu durumda jump'a basınca ilerlemesi duruyor onun durmaması için havadayken canJump
     //false olmasına rağmen sağa veya sola gidiyorsa gittiği yönde devam etmesini sağlayan koda var aşağıda.
     public void jumpButtonOn()
     {
-        if (character1Controller.canJump)
+        if(!jumpIsAlreadyClicked)
         {
-            character1Controller.Jump();
+            jumpIsAlreadyClicked = true;
+            if (character1Controller.canJump)
+            {
+                character1Controller.Jump();
+            }
+            else
+            {
+                if (!character1Controller.stopMovingLeft)
+                    moveLeftPushed();
+                if (!character1Controller.stopMovingRight)
+                    moveRightPushed();
+            }
         }
-        else
-        {
-            if (!character1Controller.stopMovingLeft)
-                moveLeftPushed();
-            if (!character1Controller.stopMovingRight)
-                moveRightPushed();
-        }
-
     }
 
     //Karakter şimdi yerde düz bir biçimde sağa gidior da olabilir, havadayken zıplamış haldeyken sağa gitmek istiyor da olabilir.

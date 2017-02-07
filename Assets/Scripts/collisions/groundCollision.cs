@@ -26,7 +26,7 @@ public class groundCollision : MonoBehaviour {
                     characterController.caprazSolaGidiyor = false;
                     characterController.caprazdaYonDegisti = false;
                     characterController.startGravity = false;
-
+                    inputManager.jumpIsAlreadyClicked = false;
 
                     if (!characterController.stopMovingRight)
                         inputManager.butonRight.Select();

@@ -29,8 +29,7 @@ public class MyCharacterController : MonoBehaviour
     public float ballReactionSpeed = 3.5f; //topa bir cisim vurduğunda topun karşı tepkideki hızı 
     public bool startGravity = false;
     public bool jumpActiavted = false;
-
-
+5546683652
     void Update()
     {
         if(poi != null)
