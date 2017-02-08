@@ -10,7 +10,7 @@ public class MyCharacterController : MonoBehaviour
     public enum Directions { Forwards, Backwards, Nowhere }
     public pyhsicsOfItems poi; //pyhsic of items , fizikle ilgili herşey poi'den çekilecek. 
 
-    public float MovmentSpeed; //hareket hızı değişkeni
+    private float MovmentSpeed = 5; //hareket hızı değişkeni
     public bool canJump = true; //karakterin zıplayabilir mi olduğunu bildirir. Mesela havadayken 1 daha zıplayamaz.
     public bool caprazSagaGidiyor = false; //çapraz yani hem jump hem de sağ ve ya sol tuşa basılıp basılmadığı gösterir. 
     public bool caprazSolaGidiyor = false; //çapraz yani hem jump hem de sağ ve ya sol tuşa basılıp basılmadığı gösterir. 
@@ -29,10 +29,12 @@ public class MyCharacterController : MonoBehaviour
     public float ballReactionSpeed = 3.5f; //topa bir cisim vurduğunda topun karşı tepkideki hızı 
     public bool startGravity = false;
     public bool jumpActiavted = false;
-5546683652
+ 
     void Update()
     {
-        if(poi != null)
+
+
+        if (poi != null)
         {
             //yere ininci gravitiy açıyor,  havadayken kapatıyor 
             if (canJump)
@@ -43,18 +45,8 @@ public class MyCharacterController : MonoBehaviour
                 //yukarı doğru azalan bir force bu da smooth bir zıplama sağlar yani duvara çarpıyomuş gibi değil
                 JumpForce = JumpSmoothKatsayisi + (JumpForceKatsayisi - ((JumpForceKatsayisi / (maxJumpHeight - jumpStartHeight)) * (poi.rbOfCharacter.transform.position.y - jumpStartHeight)));
 
-                if (caprazSagaGidiyor)
-                {
-                    jumpMovement = new Vector3(JumpForce / 2 * Time.deltaTime, JumpForce * Time.deltaTime, 0f);
-                }
-                else if (caprazSolaGidiyor)
-                {
-                    jumpMovement = new Vector3(-JumpForce / 2 * Time.deltaTime, JumpForce * Time.deltaTime, 0f);
-                }
-                else
-                {
-                    jumpMovement = new Vector3(0f, JumpForce * Time.deltaTime, 0f);
-                }
+                jumpMovement = new Vector3(0f, JumpForce * Time.deltaTime, 0f);
+
                 jumpMovement = jumpMovement + poi.rbOfCharacter.transform.position;
                 poi.rbOfCharacter.transform.position = jumpMovement;
             }
@@ -64,6 +56,7 @@ public class MyCharacterController : MonoBehaviour
                 JumpForce = JumpSmoothKatsayisi + (JumpForceKatsayisi - ((JumpForceKatsayisi / (maxJumpHeight - jumpStartHeight)) * (poi.rbOfCharacter.transform.position.y - jumpStartHeight)));
 
                 jumpMovement = new Vector3(0f, -JumpForce * Time.deltaTime, 0f);
+               
                 jumpMovement = jumpMovement + poi.rbOfCharacter.transform.position;
                 poi.rbOfCharacter.transform.position = jumpMovement;
             }
@@ -112,7 +105,7 @@ public class MyCharacterController : MonoBehaviour
     //player'in zıplamasının esas olarak gerçekleştiği metod. 
     public void Jump()
     {
-        //sağa ve zıplamaya birden basılmışsa sağa çapraz gitmesi için 
+        //sola ve zıplamaya birden basılmışsa sağa çapraz gitmesi için 
         if (!stopMovingLeft && canJump)
         {
             //poi.rbOfCharacter.velocity = new Vector3(-JumpForce / 2, JumpForce, 0);
@@ -121,8 +114,9 @@ public class MyCharacterController : MonoBehaviour
             jumpActiavted = true;
             poi.closeGravityForPlayer();
             jumpStartHeight = poi.rbOfCharacter.transform.position.y;
+            changeMovementSpeed();
         }
-        //sola ve zıplamaya birden basılmışsa sola çapraz gitmesi için 
+        //sağa ve zıplamaya birden basılmışsa sola çapraz gitmesi için 
         else if (!stopMovingRight && canJump)
         {
             //poi.rbOfCharacter.velocity = new Vector3(JumpForce / 2, JumpForce, 0);
@@ -131,6 +125,7 @@ public class MyCharacterController : MonoBehaviour
             jumpActiavted = true;
             poi.closeGravityForPlayer();
             jumpStartHeight = poi.rbOfCharacter.transform.position.y;
+            changeMovementSpeed();
         }
         //düz bir şekilde zıplaması için 
         else if (canJump)
@@ -140,7 +135,16 @@ public class MyCharacterController : MonoBehaviour
             jumpActiavted = true;
             poi.closeGravityForPlayer();
             jumpStartHeight = poi.rbOfCharacter.transform.position.y;
+            changeMovementSpeed();
         }
+    }
+
+    public void changeMovementSpeed()
+    {
+        if (canJump)
+            MovmentSpeed = 5;
+        else
+            MovmentSpeed = 2.5f;
     }
 
 

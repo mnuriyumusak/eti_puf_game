@@ -21,17 +21,20 @@ public class groundCollision : MonoBehaviour {
             {
                 if (characterController.poi.character.GetInstanceID() == coll.gameObject.GetInstanceID())
                 {
+                    if(!characterController.canJump)
+                    {
+                        if (!characterController.stopMovingRight)
+                            inputManager.butonRight.Select();
+                        if (!characterController.stopMovingLeft)
+                            inputManager.butonLeft.Select();
+                    }
+
                     characterController.canJump = true;
                     characterController.caprazSagaGidiyor = false;
                     characterController.caprazSolaGidiyor = false;
                     characterController.caprazdaYonDegisti = false;
                     characterController.startGravity = false;
-                    inputManager.jumpIsAlreadyClicked = false;
-
-                    if (!characterController.stopMovingRight)
-                        inputManager.butonRight.Select();
-                    if (!characterController.stopMovingLeft)
-                        inputManager.butonLeft.Select();
+                    characterController.changeMovementSpeed();
                 }
 
             }
