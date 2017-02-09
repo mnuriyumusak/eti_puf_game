@@ -19,7 +19,7 @@ public class MyCharacterController : MonoBehaviour
     public float JumpForceKatsayisi = 14; //zıplama gücü 
     public float JumpSmoothKatsayisi = 0.95f; //yukarda yavaşlama katsayısı 
     private float jumpStartHeight = 1.5f;
-    public float maxJumpHeight;
+    public float maxJumpHeight = 1.5f;
     private Vector3 movement; //movement vektörü sağa sola giderken kullanılan bir değişken 
     private Vector3 jumpMovement; //movement vektörünün zıplarken gideceği yolu belirleyen vektör 
     public IENumaratorHandler timehadnler;
@@ -29,10 +29,19 @@ public class MyCharacterController : MonoBehaviour
     public float ballReactionSpeed = 3.5f; //topa bir cisim vurduğunda topun karşı tepkideki hızı 
     public bool startGravity = false;
     public bool jumpActiavted = false;
+    public bool characterIsOnKale = false;
  
+    public void changeJumpHeight()
+    {
+        //kalenin üstünden zıplarken biraz daha üste çıkması için gerekli
+        if (characterIsOnKale)
+            maxJumpHeight = 3.10f;
+        else
+            maxJumpHeight = 1.5f;
+    }
+
     void Update()
     {
-
 
         if (poi != null)
         {
@@ -52,7 +61,7 @@ public class MyCharacterController : MonoBehaviour
             }
             if (poi.rbOfCharacter.transform.position.y > -3.29 && startGravity)
             {
-                //yukarı doğru azalan bir force bu da smooth bir zıplama sağlar yani duvara çarpıyomuş gibi değil
+                //aşağı doğru azalan bir force bu da smooth bir zıplama sağlar yani duvara çarpıyomuş gibi değil
                 JumpForce = JumpSmoothKatsayisi + (JumpForceKatsayisi - ((JumpForceKatsayisi / (maxJumpHeight - jumpStartHeight)) * (poi.rbOfCharacter.transform.position.y - jumpStartHeight)));
 
                 jumpMovement = new Vector3(0f, -JumpForce * Time.deltaTime, 0f);

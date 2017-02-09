@@ -7,51 +7,49 @@ kalelerin collision tepkilerini içerir.
 */
 public class kaleCollisionController : MonoBehaviour
 {
-
-    public pyhsicsOfItems poi;
-    public MyCharacterController characterController; //canJump, sağa gidiyor mu vs gibi bilgiler gerekiyor ondan dolayı gerekli .
     public Transform kale;
+ 
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        //eğer puf kalenin üstündeyse zıplayabilmeli yerden yüksekte olmasına rağmen onu ayarlayan br kod. 
-        if (coll.gameObject.tag == "pufCharacter1" && characterController.poi != null)//Burada ki değişecek
+        if (coll.gameObject.tag == "pufCharacter1" && coll.gameObject.GetComponent<MyCharacterController>().poi != null)
         {
-            //Deneme için buarya yazıyoruz
-            if(characterController.poi.character.GetInstanceID() == coll.gameObject.GetInstanceID())
-            {
-                if (Math.Abs(kale.position.y - poi.charactery) >= 1.90f)
+            MyCharacterController tmp = coll.gameObject.GetComponent<MyCharacterController>();
+                if (tmp.poi.charactery>= -0.36f)
                 {
-                    GameObject.FindGameObjectWithTag(coll.gameObject.tag).GetComponent<MyCharacterController>().canJump = true;
-                    GameObject.FindGameObjectWithTag(coll.gameObject.tag).GetComponent<MyCharacterController>().startGravity = false;
+                    tmp.characterIsOnKale = true;
+                    tmp.changeJumpHeight();
+                    tmp.canJump = true;
+                    tmp.startGravity = false;
                 }
-            }
-            
+            //kale içinden üs direğe çarptıysa rdan geri yere düşmesi için yoksa yukarı doğru çıkmak
+            //istiyor hep ve orda takılı kalıyor
+            if (tmp.poi.charactery <= -0.8f && tmp.poi.charactery > -1.3f)
+                {
+                    tmp.startGravity = true;
+                    tmp.jumpActiavted = false;
+                }
         }
+
         if (coll.gameObject.tag == "ball")
         {
-            
            // GameObject.FindGameObjectWithTag("SkorTab").GetComponent<GolSkor>().Gol(gameObject);
         }
     }
-    void OnCollisionExit2D(Collision2D coll)//burada ki değişecek
+
+    void OnCollisionExit2D(Collision2D coll) 
     {
-        if (coll.gameObject.tag == "pufCharacter1" && characterController.poi != null)
+        if (coll.gameObject.tag == "pufCharacter1" && coll.gameObject.GetComponent<MyCharacterController>().poi != null)
         {
-            if (characterController.poi.character.GetInstanceID() == coll.gameObject.GetInstanceID())
-            {
-                GameObject.FindGameObjectWithTag(coll.gameObject.tag).GetComponent<MyCharacterController>().canJump = false;
-
-            }
+            MyCharacterController tmp = coll.gameObject.GetComponent<MyCharacterController>();
+            tmp.canJump = false;
         }
-    }
 
-    public void KnowMe(GameObject player)// Burada ki değişecek
+    }
+    /*
+    public void KnowMe(GameObject player) 
     {
-        //if(Network.isServer)
-            characterController = player.GetComponent<MyCharacterController>();
-       // else
-      //      characterController = GameObject.FindGameObjectWithTag("pufCharacter2").GetComponent<MyCharacterController>();
-
+        characterController = player.GetComponent<MyCharacterController>();
     }
+    */
 }

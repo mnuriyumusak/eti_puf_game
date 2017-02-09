@@ -21,6 +21,8 @@ public class MacthMaking : MonoBehaviour {
     private groundCollision gro,gro2;
     private kaleCollisionController kaleo;
     private pyhsicsOfItems poi;
+    private ballCollisionController ballScript;
+    private GameObject ballObj;
 
     void OnGUI()
     {
@@ -95,9 +97,8 @@ public class MacthMaking : MonoBehaviour {
             gro = GameObject.FindGameObjectWithTag("gro").GetComponent<groundCollision>();
             gro.KnowMe(Player,myi);
             poi = GameObject.FindGameObjectWithTag("poi").GetComponent<pyhsicsOfItems>();
-            poi.knowMe(Player, gro.gameObject);
+            poi.knowMe(Player, gro.gameObject, ballObj);
             Player.GetComponent<MyCharacterController>().poi = poi;
-
     }
 
     void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)//Wil change to a RPC function later
@@ -112,6 +113,9 @@ public class MacthMaking : MonoBehaviour {
         {
             GameObject a = (GameObject)Network.Instantiate(PlayerPrefab, new Vector3(-6, -3.290302f, 0), Quaternion.Euler(0, 0, 0), 0);
             Network.Instantiate(Ball, Vector3.up, Quaternion.identity, 0);
+            ballScript = GameObject.FindGameObjectWithTag("ball").GetComponent<ballCollisionController>();
+            //ballScript.KnowMe(a);
+            ballObj = GameObject.FindGameObjectWithTag("ball");
             Assign(a);
         }
         else

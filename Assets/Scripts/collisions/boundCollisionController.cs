@@ -7,17 +7,32 @@ using System;
 */
 public class boundCollisionController : MonoBehaviour {
 
-    public pyhsicsOfItems poi;
+    public MyCharacterController characterController;
+    public bool isRightLeft;
+
+    void Start()
+    {
+        characterController = GameObject.FindGameObjectWithTag("myin").GetComponent<myInput>().character1Controller;
+    }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "pufCharacter")
+        if (characterController != null)
         {
- 
+            if (coll.gameObject.tag == "pufCharacter1" && characterController.poi != null)
+            {
+                if (characterController.poi.character.GetInstanceID() == coll.gameObject.GetInstanceID())
+                {
+
+                }
+            }
         }
+ 
         if (coll.gameObject.tag == "ball")
         {
  
         }
     }
+
+ 
 }

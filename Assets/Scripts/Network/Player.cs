@@ -38,7 +38,6 @@ public class Player : MonoBehaviour
         syncTime += Time.deltaTime;
         GetComponent<Rigidbody2D>().position = Vector2.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
         GetComponent<Rigidbody2D>().gravityScale = syncgravityScale;
-        
     }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)

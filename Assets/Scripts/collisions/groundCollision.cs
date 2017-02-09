@@ -21,7 +21,9 @@ public class groundCollision : MonoBehaviour {
             {
                 if (characterController.poi.character.GetInstanceID() == coll.gameObject.GetInstanceID())
                 {
-                    if(!characterController.canJump)
+                    characterController.characterIsOnKale = false;
+                    characterController.changeJumpHeight();
+                    if (!characterController.canJump)
                     {
                         if (!characterController.stopMovingRight)
                             inputManager.butonRight.Select();

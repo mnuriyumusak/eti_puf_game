@@ -93,14 +93,14 @@ public class pyhsicsOfItems : MonoBehaviour {
         rbOfCharacter.gravityScale = 0;
     }
 
-    public void knowMe(GameObject player, GameObject ground)
+    public void knowMe(GameObject player, GameObject ground, GameObject ballObject)
     {
         character = player;
         rbOfCharacter = character.GetComponent<Rigidbody2D>();
         bottomBound = ground.transform;
 
         if (Network.isServer)
-            rbOfBall = GameObject.FindGameObjectWithTag("ball").GetComponent<Rigidbody2D>();
+            rbOfBall = ballObject.GetComponent<Rigidbody2D>();
         else
             StartCoroutine(Wait1SecondForDetectBall());
 
